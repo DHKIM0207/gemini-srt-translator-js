@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gemini-srt-translator
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18.0.0
+    healthCheckPath: /
+    autoDeploy: true
