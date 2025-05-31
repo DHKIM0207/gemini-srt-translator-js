@@ -1,20 +1,20 @@
-# Source files that are not needed in npm package
-tests/
-*.test.js
-*.spec.js
-
 # Development files
 .gitignore
-.eslintrc*
-.prettierrc*
-jest.config.js
+.git/
+.github/
+*.sh
+npm-publish.sh
+push-to-github.sh
+setup-ssh-alternative.sh
 
-# Documentation source
-docs/
-
-# Examples
-examples/
+# Test files
+tests/
 *.srt
+
+# Server files
+server.js
+public/
+uploads/
 
 # IDE
 .vscode/
@@ -24,10 +24,16 @@ examples/
 *.log
 progress.log
 thoughts.log
+.*.progress
 
 # Environment
 .env
 .env.*
 
-# Progress files
-.*.progress
+# OS files
+.DS_Store
+Thumbbs.db
+
+# Build files
+coverage/
+.nyc_output/

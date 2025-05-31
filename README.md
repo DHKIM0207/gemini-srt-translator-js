@@ -1,51 +1,54 @@
 # Gemini SRT Translator (Node.js)
 
-Node.js 버전의 Gemini SRT Translator - Google Gemini AI를 사용하여 SRT 자막 파일을 번역하는 도구입니다.
+[한국어](README_ko.md) | English
 
-## 특징
+A Node.js tool to translate SRT subtitle files using Google's Gemini AI API. It maintains exact timestamps, supports batch processing, and provides resume capabilities for interrupted translations.
 
-- ✨ Google Gemini AI를 사용한 고품질 번역
-- 📝 SRT 포맷 보존 (타임스탬프 유지)
-- 🔄 중단된 번역 재개 기능
-- 🧠 "Thinking" 모드로 문맥 파악 향상 (Gemini 2.5 모델)
-- 📦 배치 처리로 대용량 자막 지원
-- 📊 실시간 진행률 표시
-- 🔑 다중 API 키 지원으로 할당량 관리
-- 🌈 컬러풀한 터미널 UI
+## Features
 
-## 설치
+- ✨ High-quality translation using Google Gemini AI
+- 📝 Preserves SRT format with exact timestamps
+- 🔄 Resume capability for interrupted translations
+- 🧠 "Thinking" mode for better context understanding (Gemini 2.5 models)
+- 📦 Batch processing for large subtitle files
+- 📊 Real-time progress tracking
+- 🔑 Multiple API key support for quota management
+- 🌈 Colorful terminal UI
+- 🌐 Web UI for easy file uploads and translation
 
-### npm으로 설치 (npm 퍼블리시 후)
+## Installation
+
+### Install from npm
 ```bash
-# 글로벌 설치
+# Global installation
 npm install -g gemini-srt-translator
 
-# 로컬 설치
+# Local installation
 npm install gemini-srt-translator
 ```
 
-### GitHub에서 설치
+### Install from GitHub
 ```bash
-# GitHub에서 직접 설치
+# Install directly from GitHub
 npm install -g github:DHKIM0207/gemini-srt-translator-js
 
-# 또는 git clone 후 설치
+# Or clone and install
 git clone https://github.com/DHKIM0207/gemini-srt-translator-js.git
 cd gemini-srt-translator-js
 npm install
-npm link  # 전역 CLI 사용을 위해
+npm link  # For global CLI usage
 ```
 
-## 사용법
+## Usage
 
-### CLI 사용
+### CLI Usage
 
-#### 기본 번역
+#### Basic Translation
 ```bash
 gemini-srt-translator translate -k YOUR_API_KEY -l Korean -i subtitle.srt
 ```
 
-#### 모든 옵션 사용
+#### With All Options
 ```bash
 gemini-srt-translator translate \
   -k YOUR_API_KEY \
@@ -55,7 +58,7 @@ gemini-srt-translator translate \
   -o subtitle_kr.srt \
   -s 100 \
   -d "Technical documentary about AI" \
-  -m gemini-2.5-flash-preview-05-20 \
+  -m gemini-2.0-flash-exp \
   -b 250 \
   --temperature 0.3 \
   --top-p 0.95 \
@@ -64,22 +67,22 @@ gemini-srt-translator translate \
   --thoughts-log
 ```
 
-#### 배치 번역
+#### Batch Translation
 ```bash
 gemini-srt-translator batch -k YOUR_API_KEY -l Spanish -i "*.srt"
 ```
 
-#### 사용 가능한 모델 확인
+#### List Available Models
 ```bash
 gemini-srt-translator listmodels -k YOUR_API_KEY
 ```
 
-### 프로그래밍 방식 사용
+### Programmatic Usage
 
 ```javascript
 import gst from 'gemini-srt-translator';
 
-// 기본 사용
+// Basic usage
 gst.geminiApiKey = "YOUR_API_KEY";
 gst.targetLanguage = "Korean";
 gst.inputFile = "subtitle.srt";
@@ -87,19 +90,19 @@ gst.inputFile = "subtitle.srt";
 await gst.translate();
 ```
 
-#### 고급 사용
+#### Advanced Usage
 ```javascript
 import gst from 'gemini-srt-translator';
 
-// 모든 옵션 설정
+// Set all options
 gst.geminiApiKey = "YOUR_API_KEY";
-gst.geminiApiKey2 = "YOUR_BACKUP_KEY"; // 백업 API 키
+gst.geminiApiKey2 = "YOUR_BACKUP_KEY"; // Backup API key
 gst.targetLanguage = "Korean";
 gst.inputFile = "subtitle.srt";
 gst.outputFile = "subtitle_kr.srt";
-gst.startLine = 100; // 100번째 줄부터 시작
+gst.startLine = 100; // Start from line 100
 gst.description = "Technical documentary about AI";
-gst.modelName = "gemini-2.5-flash-preview-05-20";
+gst.modelName = "gemini-2.0-flash-exp";
 gst.batchSize = 250;
 gst.streaming = true;
 gst.thinking = true;
@@ -113,7 +116,7 @@ gst.thoughtsLog = true;
 await gst.translate();
 ```
 
-#### 클래스 직접 사용
+#### Direct Class Usage
 ```javascript
 import { GeminiSRTTranslator } from 'gemini-srt-translator';
 
@@ -127,89 +130,113 @@ const translator = new GeminiSRTTranslator({
 await translator.translate();
 ```
 
-## CLI 옵션
+### Web UI Usage
 
-### translate 명령어
-- `-k, --api-key <key>`: Gemini API 키 (필수)
-- `-k2, --api-key2 <key>`: 백업 API 키
-- `-l, --target-language <language>`: 대상 언어 (필수)
-- `-i, --input <file>`: 입력 SRT 파일 (필수)
-- `-o, --output <file>`: 출력 파일명
-- `-s, --start-line <number>`: 시작 줄 번호
-- `-d, --description <text>`: 번역 컨텍스트
-- `-m, --model <name>`: Gemini 모델명
-- `-b, --batch-size <number>`: 배치 크기
-- `--temperature <number>`: 온도 (0.0-2.0)
-- `--top-p <number>`: Top-p 샘플링 (0.0-1.0)
-- `--top-k <number>`: Top-k 샘플링
-- `--no-streaming`: 스트리밍 비활성화
-- `--no-thinking`: Thinking 모드 비활성화
-- `--thinking-budget <number>`: Thinking 토큰 예산
-- `--pro-quota`: Pro 할당량 사용 (지연 없음)
-- `--no-colors`: 컬러 출력 비활성화
-- `--progress-log`: 진행 상황 로그 저장
-- `--thoughts-log`: AI 사고 과정 로그 저장
-- `--skip-upgrade`: 버전 업데이트 확인 건너뛰기
+The package includes a web interface for easy file uploads and translation:
 
-## 환경 변수
+```bash
+# Start the web server
+npm run ui
 
-API 키를 환경 변수로 설정할 수 있습니다:
+# Or if installed globally
+gemini-srt-translator ui
+```
+
+Then open http://localhost:3000 in your browser.
+
+## CLI Options
+
+### translate Command
+- `-k, --api-key <key>`: Gemini API key (required)
+- `-k2, --api-key2 <key>`: Backup API key
+- `-l, --target-language <language>`: Target language (required)
+- `-i, --input <file>`: Input SRT file (required)
+- `-o, --output <file>`: Output filename
+- `-s, --start-line <number>`: Starting line number
+- `-d, --description <text>`: Translation context
+- `-m, --model <name>`: Gemini model name
+- `-b, --batch-size <number>`: Batch size
+- `--temperature <number>`: Temperature (0.0-2.0)
+- `--top-p <number>`: Top-p sampling (0.0-1.0)
+- `--top-k <number>`: Top-k sampling
+- `--no-streaming`: Disable streaming
+- `--no-thinking`: Disable thinking mode
+- `--thinking-budget <number>`: Thinking token budget
+- `--pro-quota`: Use pro quota (no delay)
+- `--no-colors`: Disable colored output
+- `--progress-log`: Save progress log
+- `--thoughts-log`: Save AI thinking process
+- `--skip-upgrade`: Skip version update check
+
+## Environment Variables
+
+You can set the API key as an environment variable:
 ```bash
 export GEMINI_API_KEY="your_api_key_here"
 ```
 
-## 진행 상황 저장 및 재개
+## Progress Saving and Resume
 
-번역이 중단되면 자동으로 진행 상황이 저장됩니다. 같은 명령을 다시 실행하면 중단된 지점부터 재개할 수 있습니다.
+Translation progress is automatically saved when interrupted. Running the same command again will resume from where it left off.
 
-진행 상황은 입력 파일과 같은 디렉토리에 `.{filename}.progress` 파일로 저장됩니다.
+Progress is saved as `.{filename}.progress` in the same directory as the input file.
 
-## 지원 언어
+## Supported Languages
 
-Google Gemini AI가 지원하는 모든 언어로 번역할 수 있습니다. 예시:
+Supports all languages available in Google Gemini AI, including:
 - Korean (한국어)
-- Japanese (日本語)
+- Japanese (日本語)  
 - Chinese (中文)
 - Spanish (Español)
 - French (Français)
 - German (Deutsch)
-- 그 외 100개 이상의 언어
+- And 100+ more languages
 
-## 주의사항
+## Available Models
 
-1. **API 키**: Google AI Studio에서 Gemini API 키를 발급받아야 합니다.
-2. **할당량**: 무료 할당량 사용 시 요청 간 2초 지연이 있습니다. Pro 할당량은 `--pro-quota` 옵션으로 사용할 수 있습니다.
-3. **파일 크기**: 대용량 파일은 배치로 나누어 처리됩니다. 기본 배치 크기는 300개 자막입니다.
-4. **토큰 제한**: 모델의 토큰 제한에 주의하세요. 필요시 배치 크기를 조정하세요.
+- `gemini-2.0-flash-exp` - Latest, fast model (default)
+- `gemini-1.5-flash` - Fast and efficient
+- `gemini-1.5-pro` - More accurate
+- `gemini-2.5-flash-preview-05-20` - Preview with thinking capability
+- `gemini-2.5-flash-thinking-latest` - With thinking mode
+- `gemini-2.5-pro-preview-05-20` - Pro preview
+- `gemini-2.5-pro-thinking-latest` - Pro with thinking mode
 
-## 문제 해결
+## Notes
 
-### API 키 오류
+1. **API Key**: Get your Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. **Quotas**: Free tier has 2-second delays between requests. Use `--pro-quota` for pro tier
+3. **File Size**: Large files are processed in batches. Default batch size is 300 subtitles
+4. **Token Limits**: Be mindful of model token limits. Adjust batch size if needed
+
+## Troubleshooting
+
+### API Key Error
 ```bash
 export GEMINI_API_KEY="your_actual_api_key"
 ```
 
-### 할당량 초과
-- 백업 API 키 사용: `-k2` 옵션
-- 배치 크기 줄이기: `-b 100`
-- Pro 할당량 사용: `--pro-quota`
+### Quota Exceeded
+- Use backup API key: `-k2` option
+- Reduce batch size: `-b 100`
+- Use pro quota: `--pro-quota`
 
-### 메모리 부족
-- 배치 크기 줄이기
-- 스트리밍 모드 사용 (기본값)
+### Out of Memory
+- Reduce batch size
+- Use streaming mode (default)
 
 ## Credits
 
 This is a Node.js port of the original Python [gemini-srt-translator](https://github.com/MaKTaiL/gemini-srt-translator) by [Matheus Castro](mailto:matheuscastro@gmail.com).
 
-## 라이선스
+## License
 
 MIT License
 
-## 기여
+## Contributing
 
-이슈 및 PR은 언제나 환영합니다!
+Issues and PRs are always welcome!
 
-## 원본 프로젝트
+## Original Project
 
-이 프로젝트는 [Python 버전](https://github.com/MaKTaiL/gemini-srt-translator)의 Node.js 포팅입니다.
+This project is a Node.js port of the [Python version](https://github.com/MaKTaiL/gemini-srt-translator).
