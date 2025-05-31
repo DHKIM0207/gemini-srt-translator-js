@@ -1,242 +1,119 @@
-# Gemini SRT Translator (Node.js)
+# Gemini SRT Translator - Web UI
 
-[한국어](README_ko.md) | English
+Google Gemini AI를 사용하여 SRT 자막 파일을 번역하는 웹 애플리케이션입니다.
 
-A Node.js tool to translate SRT subtitle files using Google's Gemini AI API. It maintains exact timestamps, supports batch processing, and provides resume capabilities for interrupted translations.
+## 🚀 빠른 시작
 
-## Features
-
-- ✨ High-quality translation using Google Gemini AI
-- 📝 Preserves SRT format with exact timestamps
-- 🔄 Resume capability for interrupted translations
-- 🧠 "Thinking" mode for better context understanding (Gemini 2.5 models)
-- 📦 Batch processing for large subtitle files
-- 📊 Real-time progress tracking
-- 🔑 Multiple API key support for quota management
-- 🌈 Colorful terminal UI
-- 🌐 Web UI for easy file uploads and translation
-
-## Installation
-
-### Install from npm
+### 1. 프로젝트 클론
 ```bash
-# Global installation
-npm install -g gemini-srt-translator
-
-# Local installation
-npm install gemini-srt-translator
-```
-
-### Install from GitHub
-```bash
-# Install directly from GitHub
-npm install -g github:DHKIM0207/gemini-srt-translator-js
-
-# Or clone and install
 git clone https://github.com/DHKIM0207/gemini-srt-translator-js.git
 cd gemini-srt-translator-js
+```
+
+### 2. 의존성 설치
+```bash
 npm install
-npm link  # For global CLI usage
 ```
 
-## Usage
-
-### CLI Usage
-
-#### Basic Translation
+### 3. 웹 서버 실행
 ```bash
-gemini-srt-translator translate -k YOUR_API_KEY -l Korean -i subtitle.srt
-```
-
-#### With All Options
-```bash
-gemini-srt-translator translate \
-  -k YOUR_API_KEY \
-  -k2 YOUR_BACKUP_KEY \
-  -l Korean \
-  -i subtitle.srt \
-  -o subtitle_kr.srt \
-  -s 100 \
-  -d "Technical documentary about AI" \
-  -m gemini-2.0-flash-exp \
-  -b 250 \
-  --temperature 0.3 \
-  --top-p 0.95 \
-  --top-k 40 \
-  --progress-log \
-  --thoughts-log
-```
-
-#### Batch Translation
-```bash
-gemini-srt-translator batch -k YOUR_API_KEY -l Spanish -i "*.srt"
-```
-
-#### List Available Models
-```bash
-gemini-srt-translator listmodels -k YOUR_API_KEY
-```
-
-### Programmatic Usage
-
-```javascript
-import gst from 'gemini-srt-translator';
-
-// Basic usage
-gst.geminiApiKey = "YOUR_API_KEY";
-gst.targetLanguage = "Korean";
-gst.inputFile = "subtitle.srt";
-
-await gst.translate();
-```
-
-#### Advanced Usage
-```javascript
-import gst from 'gemini-srt-translator';
-
-// Set all options
-gst.geminiApiKey = "YOUR_API_KEY";
-gst.geminiApiKey2 = "YOUR_BACKUP_KEY"; // Backup API key
-gst.targetLanguage = "Korean";
-gst.inputFile = "subtitle.srt";
-gst.outputFile = "subtitle_kr.srt";
-gst.startLine = 100; // Start from line 100
-gst.description = "Technical documentary about AI";
-gst.modelName = "gemini-2.0-flash-exp";
-gst.batchSize = 250;
-gst.streaming = true;
-gst.thinking = true;
-gst.thinkingBudget = 2048;
-gst.temperature = 0.3;
-gst.topP = 0.95;
-gst.topK = 40;
-gst.progressLog = true;
-gst.thoughtsLog = true;
-
-await gst.translate();
-```
-
-#### Direct Class Usage
-```javascript
-import { GeminiSRTTranslator } from 'gemini-srt-translator';
-
-const translator = new GeminiSRTTranslator({
-  geminiApiKey: "YOUR_API_KEY",
-  targetLanguage: "Korean",
-  inputFile: "subtitle.srt",
-  outputFile: "subtitle_kr.srt"
-});
-
-await translator.translate();
-```
-
-### Web UI Usage
-
-The package includes a web interface for easy file uploads and translation:
-
-```bash
-# Start the web server
 npm run ui
-
-# Or if installed globally
-gemini-srt-translator ui
 ```
 
-Then open http://localhost:3000 in your browser.
+### 4. 브라우저에서 열기
+http://localhost:3000 으로 접속하세요.
 
-## CLI Options
+## 📸 스크린샷
 
-### translate Command
-- `-k, --api-key <key>`: Gemini API key (required)
-- `-k2, --api-key2 <key>`: Backup API key
-- `-l, --target-language <language>`: Target language (required)
-- `-i, --input <file>`: Input SRT file (required)
-- `-o, --output <file>`: Output filename
-- `-s, --start-line <number>`: Starting line number
-- `-d, --description <text>`: Translation context
-- `-m, --model <name>`: Gemini model name
-- `-b, --batch-size <number>`: Batch size
-- `--temperature <number>`: Temperature (0.0-2.0)
-- `--top-p <number>`: Top-p sampling (0.0-1.0)
-- `--top-k <number>`: Top-k sampling
-- `--no-streaming`: Disable streaming
-- `--no-thinking`: Disable thinking mode
-- `--thinking-budget <number>`: Thinking token budget
-- `--pro-quota`: Use pro quota (no delay)
-- `--no-colors`: Disable colored output
-- `--progress-log`: Save progress log
-- `--thoughts-log`: Save AI thinking process
-- `--skip-upgrade`: Skip version update check
+<img width="600" alt="Gemini SRT Translator UI" src="https://github.com/DHKIM0207/gemini-srt-translator-js/assets/38580573/screenshot-placeholder">
 
-## Environment Variables
+## ✨ 주요 기능
 
-You can set the API key as an environment variable:
+- 🌐 **웹 인터페이스**: 브라우저에서 쉽게 사용
+- 📁 **드래그 앤 드롭**: SRT 파일을 드래그해서 업로드
+- 🔄 **실시간 진행률**: 번역 진행 상황을 실시간으로 확인
+- 💾 **즉시 다운로드**: 번역 완료 후 바로 다운로드
+- 👁️ **미리보기**: 번역된 내용을 다운로드 전에 확인
+
+## 🛠️ 설정
+
+### Gemini API 키 받기
+
+1. [Google AI Studio](https://makersuite.google.com/app/apikey) 방문
+2. "Create API Key" 클릭
+3. 생성된 API 키 복사
+
+### 웹 UI 사용법
+
+1. **API 키 입력**: Gemini API 키를 입력란에 붙여넣기
+2. **언어 선택**: 번역하고 싶은 대상 언어 선택
+3. **파일 업로드**: SRT 파일을 드래그 앤 드롭 또는 클릭해서 선택
+4. **번역 시작**: "번역 시작" 버튼 클릭
+5. **다운로드**: 번역 완료 후 파일 다운로드
+
+## 🎯 지원 언어
+
+- 한국어 (Korean)
+- 영어 (English)
+- 일본어 (Japanese)
+- 중국어 (Chinese)
+- 스페인어 (Spanish)
+- 프랑스어 (French)
+- 독일어 (German)
+- 이탈리아어 (Italian)
+- 포르투갈어 (Portuguese)
+- 러시아어 (Russian)
+- 아랍어 (Arabic)
+- 힌디어 (Hindi)
+- 그 외 100개 이상의 언어
+
+## 🤖 사용 가능한 모델
+
+- **Gemini 2.0 Flash** (기본값) - 최신 고속 모델
+- **Gemini 1.5 Flash** - 빠르고 효율적
+- **Gemini 1.5 Pro** - 더 정확한 번역
+- **Gemini 2.5 모델들** - Thinking 기능 포함 (고급 문맥 이해)
+
+## ⚙️ 고급 설정
+
+### 배치 크기
+한 번에 처리할 자막 개수를 조절할 수 있습니다. (기본값: 30)
+
+### Temperature
+번역의 창의성을 조절합니다. (0-2, 낮을수록 일관성 있음)
+
+### 스트리밍 모드
+실시간으로 번역 결과를 받아볼 수 있습니다.
+
+### Thinking 모드
+Gemini 2.5 모델에서 사용 가능한 고급 문맥 이해 기능입니다.
+
+## 🐛 문제 해결
+
+### 서버가 시작되지 않을 때
 ```bash
-export GEMINI_API_KEY="your_api_key_here"
+# 포트 확인
+lsof -i :3000
+# 다른 포트로 실행
+PORT=3001 npm run ui
 ```
 
-## Progress Saving and Resume
+### API 키 오류
+- API 키가 올바른지 확인
+- [Google AI Studio](https://makersuite.google.com/app/apikey)에서 키 상태 확인
 
-Translation progress is automatically saved when interrupted. Running the same command again will resume from where it left off.
+### 파일 업로드 실패
+- SRT 파일 형식이 올바른지 확인
+- 파일 크기가 너무 크지 않은지 확인
 
-Progress is saved as `.{filename}.progress` in the same directory as the input file.
-
-## Supported Languages
-
-Supports all languages available in Google Gemini AI, including:
-- Korean (한국어)
-- Japanese (日本語)  
-- Chinese (中文)
-- Spanish (Español)
-- French (Français)
-- German (Deutsch)
-- And 100+ more languages
-
-## Available Models
-
-- `gemini-2.0-flash-exp` - Latest, fast model (default)
-- `gemini-1.5-flash` - Fast and efficient
-- `gemini-1.5-pro` - More accurate
-- `gemini-2.5-flash-preview-05-20` - Preview with thinking capability
-- `gemini-2.5-flash-thinking-latest` - With thinking mode
-- `gemini-2.5-pro-preview-05-20` - Pro preview
-- `gemini-2.5-pro-thinking-latest` - Pro with thinking mode
-
-## Notes
-
-1. **API Key**: Get your Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. **Quotas**: Free tier has 2-second delays between requests. Use `--pro-quota` for pro tier
-3. **File Size**: Large files are processed in batches. Default batch size is 300 subtitles
-4. **Token Limits**: Be mindful of model token limits. Adjust batch size if needed
-
-## Troubleshooting
-
-### API Key Error
-```bash
-export GEMINI_API_KEY="your_actual_api_key"
-```
-
-### Quota Exceeded
-- Use backup API key: `-k2` option
-- Reduce batch size: `-b 100`
-- Use pro quota: `--pro-quota`
-
-### Out of Memory
-- Reduce batch size
-- Use streaming mode (default)
-
-## Credits
-
-This is a Node.js port of the original Python [gemini-srt-translator](https://github.com/MaKTaiL/gemini-srt-translator) by [Matheus Castro](mailto:matheuscastro@gmail.com).
-
-## License
+## 📄 라이선스
 
 MIT License
 
-## Contributing
+## 🙏 크레딧
 
-Issues and PRs are always welcome!
+원본 Python 버전: [gemini-srt-translator](https://github.com/MaKTaiL/gemini-srt-translator) by Matheus Castro
 
-## Original Project
+---
 
-This project is a Node.js port of the [Python version](https://github.com/MaKTaiL/gemini-srt-translator).
+💡 **도움이 필요하신가요?** [이슈](https://github.com/DHKIM0207/gemini-srt-translator-js/issues)를 생성해주세요!
