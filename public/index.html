@@ -33,21 +33,13 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="targetLanguage">대상 언어 *</label>
-                        <select id="targetLanguage" required>
-                            <option value="">언어 선택...</option>
-                            <option value="Korean">한국어</option>
-                            <option value="English">영어</option>
-                            <option value="Japanese">일본어</option>
-                            <option value="Chinese">중국어</option>
-                            <option value="Spanish">스페인어</option>
-                            <option value="French">프랑스어</option>
-                            <option value="German">독일어</option>
-                            <option value="Italian">이탈리아어</option>
-                            <option value="Portuguese">포르투갈어</option>
-                            <option value="Russian">러시아어</option>
-                            <option value="Arabic">아랍어</option>
-                            <option value="Hindi">힌디어</option>
-                        </select>
+                        <div class="language-selector">
+                            <input type="text" id="languageSearch" placeholder="언어 검색 (예: 한국어, English, 日本語...)" autocomplete="off">
+                            <select id="targetLanguage" required style="display: none;">
+                                <option value="Korean" selected>한국어</option>
+                            </select>
+                            <div id="languageDropdown" class="language-dropdown" style="display: none;"></div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="model">모델</label>

@@ -361,6 +361,74 @@ footer a:hover {
     padding-top: 10px;
 }
 
+/* Language selector styles */
+.language-selector {
+    position: relative;
+}
+
+#languageSearch {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+#languageSearch:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e1e8ed;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.language-option {
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.language-option:last-child {
+    border-bottom: none;
+}
+
+.language-option:hover {
+    background-color: #f3f4ff;
+}
+
+.language-option.selected {
+    background-color: #667eea;
+    color: white;
+}
+
+.language-native {
+    font-weight: 600;
+}
+
+.language-english {
+    font-size: 0.9em;
+    color: #666;
+    margin-left: 8px;
+}
+
+.language-option.selected .language-english {
+    color: rgba(255, 255, 255, 0.8);
+}
+
 @media (max-width: 600px) {
     .form-row {
         grid-template-columns: 1fr;
