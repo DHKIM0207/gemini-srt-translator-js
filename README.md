@@ -25,7 +25,8 @@ http://localhost:3000 으로 접속하세요.
 
 ## 📸 스크린샷
 
-<img width="600" alt="Gemini SRT Translator UI" src="https://github.com/DHKIM0207/gemini-srt-translator-js/assets/38580573/screenshot-placeholder">
+![screencapture-localhost-3000-2025-05-31-19_36_28](https://github.com/user-attachments/assets/cecc3d99-00d8-4870-a427-8c35ae1faebc)
+
 
 ## ✨ 주요 기능
 
