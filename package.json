@@ -1,6 +1,6 @@
 {
   "name": "gemini-srt-translator",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A tool to translate subtitles using Google Generative AI",
   "main": "src/index.js",
   "bin": {
