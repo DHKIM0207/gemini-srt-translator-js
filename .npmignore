@@ -1,0 +1,33 @@
+# Source files that are not needed in npm package
+tests/
+*.test.js
+*.spec.js
+
+# Development files
+.gitignore
+.eslintrc*
+.prettierrc*
+jest.config.js
+
+# Documentation source
+docs/
+
+# Examples
+examples/
+*.srt
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+progress.log
+thoughts.log
+
+# Environment
+.env
+.env.*
+
+# Progress files
+.*.progress

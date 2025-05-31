@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini SRT Translator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 Gemini SRT Translator</h1>
+            <p>Google Gemini AI를 사용하여 SRT 자막 파일을 번역합니다</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>API 설정</h2>
+                <div class="form-group">
+                    <label for="apiKey">Gemini API Key *</label>
+                    <input type="password" id="apiKey" placeholder="AIza..." required>
+                    <small>Google AI Studio에서 발급받은 API 키를 입력하세요</small>
+                </div>
+                <div class="form-group">
+                    <label for="apiKey2">백업 API Key (선택)</label>
+                    <input type="password" id="apiKey2" placeholder="AIza...">
+                    <small>할당량 관리를 위한 두 번째 API 키</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>번역 설정</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="targetLanguage">대상 언어 *</label>
+                        <select id="targetLanguage" required>
+                            <option value="">언어 선택...</option>
+                            <option value="Korean">한국어</option>
+                            <option value="English">영어</option>
+                            <option value="Japanese">일본어</option>
+                            <option value="Chinese">중국어</option>
+                            <option value="Spanish">스페인어</option>
+                            <option value="French">프랑스어</option>
+                            <option value="German">독일어</option>
+                            <option value="Italian">이탈리아어</option>
+                            <option value="Portuguese">포르투갈어</option>
+                            <option value="Russian">러시아어</option>
+                            <option value="Arabic">아랍어</option>
+                            <option value="Hindi">힌디어</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="model">모델</label>
+                        <select id="model">
+                            <option value="gemini-2.0-flash-exp" selected>Gemini 2.0 Flash (최신, 빠름)</option>
+                            <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+                            <option value="gemini-1.5-pro">Gemini 1.5 Pro (정확)</option>
+                            <option value="gemini-2.5-flash-preview-05-20">Gemini 2.5 Flash Preview</option>
+                            <option value="gemini-2.5-flash-thinking-latest">Gemini 2.5 Flash Thinking</option>
+                            <option value="gemini-2.5-pro-preview-05-20">Gemini 2.5 Pro Preview</option>
+                            <option value="gemini-2.5-pro-thinking-latest">Gemini 2.5 Pro Thinking</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">추가 설명 (선택)</label>
+                    <textarea id="description" rows="3" placeholder="예: 기술 문서, 영화 자막, 강의 내용 등"></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>고급 설정</h2>
+                <div class="advanced-settings">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="batchSize">배치 크기</label>
+                            <input type="number" id="batchSize" value="30" min="1" max="500">
+                            <small>한 번에 처리할 자막 개수</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="temperature">Temperature</label>
+                            <input type="number" id="temperature" step="0.1" min="0" max="2" placeholder="기본값">
+                            <small>창의성 조절 (0-2)</small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="topP">Top-p</label>
+                            <input type="number" id="topP" step="0.01" min="0" max="1" placeholder="기본값">
+                            <small>샘플링 범위 (0-1)</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="topK">Top-k</label>
+                            <input type="number" id="topK" min="0" placeholder="기본값">
+                            <small>고려할 토큰 수</small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="streaming" checked>
+                                스트리밍 응답 사용
+                            </label>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="thinking">
+                                Thinking 모드 (2.5 모델만)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="thinkingBudgetGroup" style="display: none;">
+                        <label for="thinkingBudget">Thinking 토큰 예산</label>
+                        <input type="number" id="thinkingBudget" value="2048" min="0" max="24576">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>파일 업로드</h2>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".srt" style="display: none;">
+                    <div class="upload-content">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        <p>SRT 파일을 드래그하거나 클릭하여 선택하세요</p>
+                        <p class="file-info" id="fileInfo"></p>
+                    </div>
+                </div>
+            </div>
+
+            <button id="translateBtn" class="translate-btn" disabled>
+                <span class="btn-text">번역 시작</span>
+                <span class="btn-loading" style="display: none;">
+                    <svg class="spinner" width="20" height="20" viewBox="0 0 50 50">
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="5"></circle>
+                    </svg>
+                    번역 중...
+                </span>
+            </button>
+
+            <div id="progressArea" class="progress-area" style="display: none;">
+                <div class="progress-info">
+                    <span class="progress-label">Translating:</span>
+                    <span class="progress-status" id="progressStatus">0/0</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">준비 중...</p>
+            </div>
+
+            <div id="resultArea" class="result-area" style="display: none;">
+                <h3>번역 완료!</h3>
+                <div class="result-actions">
+                    <button id="downloadBtn" class="download-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        번역된 파일 다운로드
+                    </button>
+                    <button id="previewBtn" class="preview-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        미리보기
+                    </button>
+                </div>
+                <pre id="previewContent" class="preview-content" style="display: none;"></pre>
+            </div>
+
+            <div id="errorArea" class="error-area" style="display: none;">
+                <p id="errorMessage"></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by Google Gemini AI | <a href="https://github.com/DHKIM0207/gemini-srt-translator-js" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
